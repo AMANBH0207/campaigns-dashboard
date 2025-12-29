@@ -10,38 +10,47 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import CampaignDetailsModal from "./modals/CampaignDetailsModal";
+import type { Campaign } from "@/schema/global";
+
+interface CampaignsTableProps {
+  data?: { campaigns: Campaign[] };
+  isLoading: boolean;
+  isError: boolean;
+}
 
 export default function CampaignsTable({
   data,
   isLoading,
   isError,
-}: {
-  data: any;
-  isLoading: boolean;
-  isError: boolean;
-}) {
-  const [itemsPerPage, setItemsPerPage] = useState(8);
-  const [page, setPage] = useState(1);
+}: CampaignsTableProps) {
+  const [itemsPerPage, setItemsPerPage] = useState<number>(8);
+  const [page, setPage] = useState<number>(1);
+  const [selectedCampaign, setSelectedCampaign] = useState<string | null>(null);
 
-  const campaigns = data?.campaigns || [];
-
+  const campaigns: Campaign[] = data?.campaigns ?? [];
   const totalPages = Math.ceil(campaigns.length / itemsPerPage);
 
   const paginatedData = useMemo(() => {
     const start = (page - 1) * itemsPerPage;
     return campaigns.slice(start, start + itemsPerPage);
   }, [campaigns, page, itemsPerPage]);
-  const [selectedCampaign, setSelectedCampaign] = useState<string | null>(null);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-10 gap-3">
         <div className="h-10 w-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
         <p className="text-sm text-gray-500">Loading campaigns...</p>
       </div>
     );
-  if (isError)
-    return <div className="p-6 text-red-500 text-center">Failed to load campaigns</div>;
+  }
+
+  if (isError) {
+    return (
+      <div className="p-6 text-red-500 text-center">
+        Failed to load campaigns
+      </div>
+    );
+  }
 
   return (
     <>
@@ -74,7 +83,7 @@ export default function CampaignsTable({
             </TableHeader>
 
             <TableBody>
-              {paginatedData.map((c) => (
+              {paginatedData.map((c: Campaign) => (
                 <TableRow key={c.id}>
                   <TableCell
                     className="font-medium text-blue-600 cursor-pointer hover:underline"
@@ -111,12 +120,12 @@ export default function CampaignsTable({
 
         {/* Pagination */}
         <div className="flex items-center justify-between px-4 py-3 border-t text-sm">
-          {/* Items per page */}
+          {/* Rows per page */}
           <div className="flex items-center gap-2">
             <span>Rows:</span>
             <select
               value={itemsPerPage}
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                 setItemsPerPage(Number(e.target.value));
                 setPage(1);
               }}
@@ -130,6 +139,7 @@ export default function CampaignsTable({
             </select>
           </div>
 
+          {/* Range display */}
           <span className="text-xs sm:text-sm whitespace-nowrap">
             <span className="sm:hidden">
               {(page - 1) * itemsPerPage + 1}–
@@ -144,6 +154,7 @@ export default function CampaignsTable({
             </span>
           </span>
 
+          {/* Controls */}
           <div className="flex items-center gap-2">
             <Button
               size="sm"

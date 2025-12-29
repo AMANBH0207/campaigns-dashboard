@@ -5,7 +5,7 @@ export interface Campaign {
   status: "active" | "paused" | "completed";
   budget: number;
   daily_budget: number;
-  platforms: ("meta" | "google" | "linkedin" | "other")[];
+  platforms: (string |"meta" | "google" | "linkedin" | "other")[];
   created_at: string;
 }
 

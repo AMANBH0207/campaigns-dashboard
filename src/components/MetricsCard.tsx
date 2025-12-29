@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card"
 
-export default function MetricsCard({ label, value }: { label: string; value: string }) {
+export default function MetricsCard({ label, value }: { label: string; value: string|number }) {
   return (
     <Card className="p-4 md:p-6 hover:shadow-md transition-shadow">
       <p className="text-gray-600 text-xs md:text-sm mb-2">{label}</p>

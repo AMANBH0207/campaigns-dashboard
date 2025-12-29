@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import MetricsCard from "@/components/MetricsCard";
 import PerformanceChart from "@/components/PerformanceChart";
@@ -8,6 +6,7 @@ import {
   useGetCampaignsInsightsQuery,
   useGetCampaignsQuery,
 } from "../services/apiSlice";
+import type { Campaign } from "@/schema/global";
 
 export default function Dashboard() {
   const [userSelectedCampaign, setUserSelectedCampaign] = useState<
@@ -22,7 +21,6 @@ export default function Dashboard() {
 
   return (
     <main className="flex-1 overflow-auto p-4 md:p-6 space-y-6">
-      {/* Page Header */}
       <div>
         <h1 className="text-xl md:text-2xl font-semibold text-gray-900">
           Campaign Overview
@@ -32,7 +30,6 @@ export default function Dashboard() {
         </p>
       </div>
 
-      {/* Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricsCard
           label="Total Spend"
@@ -63,7 +60,7 @@ export default function Dashboard() {
           onChange={(e) => setUserSelectedCampaign(e.target.value)}
           className="w-full sm:w-auto border rounded-md px-3 py-2 text-sm bg-white mt-2 sm:mt-0"
         >
-          {data?.campaigns?.map((c: any) => (
+          {data?.campaigns?.map((c: Campaign) => (
             <option key={c.id} value={c.id}>
               {c.name}
             </option>

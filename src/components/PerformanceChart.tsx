@@ -1,29 +1,33 @@
-"use client"
+"use client";
 
-import { Card } from "@/components/ui/card"
-import { useEffect, useRef, useState } from "react"
-import Chart from "chart.js/auto"
-import { startCampaignStream } from "@/services/campaignStream"
+import { Card } from "@/components/ui/card";
+import { useEffect, useRef, useState } from "react";
+import Chart from "chart.js/auto";
+import { startCampaignStream } from "@/services/campaignStream";
 
 type Point = {
-  time: string
-  impressions: number
-  clicks: number
-  spend: number
-}
+  time: string;
+  impressions: number;
+  clicks: number;
+  spend: number;
+};
 
-export default function PerformanceChart({ campaignId }: { campaignId: string }) {
-  const chartRef = useRef<HTMLCanvasElement>(null)
-  const chartInstance = useRef<Chart | null>(null)
+export default function PerformanceChart({
+  campaignId,
+}: {
+  campaignId: string | null;
+}) {
+  const chartRef = useRef<HTMLCanvasElement>(null);
+  const chartInstance = useRef<Chart | null>(null);
 
-  const [points, setPoints] = useState<Point[]>([])
+  const [points, setPoints] = useState<Point[]>([]);
 
   // Create chart once
   useEffect(() => {
-    if (!chartRef.current) return
+    if (!chartRef.current) return;
 
-    const ctx = chartRef.current.getContext("2d")
-    if (!ctx) return
+    const ctx = chartRef.current.getContext("2d");
+    if (!ctx) return;
 
     chartInstance.current = new Chart(ctx, {
       type: "bar",
@@ -64,42 +68,51 @@ export default function PerformanceChart({ campaignId }: { campaignId: string })
         responsive: true,
         maintainAspectRatio: false,
       },
-    })
+    });
 
-    return () => chartInstance.current?.destroy()
-  }, [])
+    return () => chartInstance.current?.destroy();
+  }, []);
 
   // Stream data
   useEffect(() => {
-    if (!campaignId) return
+    if (!campaignId) return;
 
-    setPoints([])
+    let isFirst = true;
 
     const stopStream = startCampaignStream(campaignId, (data) => {
-      setPoints((prev) =>
-        [...prev, {
+      setPoints((prev) => {
+        const next = {
           time: new Date(data.timestamp).toLocaleTimeString(),
           impressions: data.impressions,
           clicks: data.clicks,
           spend: data.spend,
-        }].slice(-12)
-      )
-    })
+        };
 
-    return () => stopStream()
-  }, [campaignId])
+        if (isFirst) {
+          isFirst = false;
+          return [next];
+        }
+
+        return [...prev, next].slice(-12);
+      });
+    });
+
+    return () => stopStream();
+  }, [campaignId]);
 
   // Update chart when data changes
   useEffect(() => {
-    if (!chartInstance.current) return
+    if (!chartInstance.current) return;
 
-    chartInstance.current.data.labels = points.map(p => p.time)
-    chartInstance.current.data.datasets[0].data = points.map(p => p.impressions)
-    chartInstance.current.data.datasets[1].data = points.map(p => p.spend)
-    chartInstance.current.data.datasets[2].data = points.map(p => p.clicks)
+    chartInstance.current.data.labels = points.map((p) => p.time);
+    chartInstance.current.data.datasets[0].data = points.map(
+      (p) => p.impressions
+    );
+    chartInstance.current.data.datasets[1].data = points.map((p) => p.spend);
+    chartInstance.current.data.datasets[2].data = points.map((p) => p.clicks);
 
-    chartInstance.current.update()
-  }, [points])
+    chartInstance.current.update();
+  }, [points]);
 
   return (
     <Card className="p-4 md:p-6 mb-6">
@@ -110,5 +123,5 @@ export default function PerformanceChart({ campaignId }: { campaignId: string })
         <canvas ref={chartRef} />
       </div>
     </Card>
-  )
+  );
 }
