@@ -1,14 +1,5 @@
-export type CampaignStreamData = {
-  campaign_id: string;
-  timestamp: string;
-  impressions: number;
-  clicks: number;
-  conversions: number;
-  spend: number;
-  ctr: number;
-  cpc: number;
-  conversion_rate: number;
-};
+import type { CampaignStreamData } from "../schema/global";
+
 
 export function startCampaignStream(
   campaignId: string,

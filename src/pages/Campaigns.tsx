@@ -11,22 +11,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 
 export default function CampaignsPage() {
   const { data, isLoading, isError } = useGetCampaignsQuery();
-
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<string | null>(null);
-  const [platform, setPlatform] = useState<string | null>(null);
+  const [search, setSearch] = useState<string>("");
+  const [status, setStatus] = useState<string>("all");
+  const [platform, setPlatform] = useState<string>("all");
 
   const filteredCampaigns = useMemo(() => {
     if (!data?.campaigns) return [];
 
     return data.campaigns.filter((c: any) => {
       const matchesSearch = c.name.toLowerCase().includes(search.toLowerCase());
-      const matchesStatus = !status || c.status === status;
-      const matchesPlatform = !platform || c.platforms.includes(platform);
+      const matchesStatus = status === "all" ? true : c.status === status;
+
+      const matchesPlatform =
+        platform === "all" ? true : c.platforms.includes(platform);
 
       return matchesSearch && matchesStatus && matchesPlatform;
     });
@@ -34,7 +34,6 @@ export default function CampaignsPage() {
 
   return (
     <main className="flex-1 overflow-auto p-4 md:p-6 space-y-6">
-      {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-xl md:text-2xl font-semibold text-gray-900">
@@ -48,40 +47,40 @@ export default function CampaignsPage() {
         {/* <Button>Create Campaign</Button> */}
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <Input
-          placeholder="Search campaign..."
-          className="sm:w-64"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+     <div className="flex flex-col sm:flex-row gap-3">
+  <Input
+    placeholder="Search campaign..."
+    className="w-full sm:w-64"
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
 
-        <Select onValueChange={setStatus}>
-          <SelectTrigger className="sm:w-40">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="active">Active</SelectItem>
-            <SelectItem value="paused">Paused</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-          </SelectContent>
-        </Select>
+  <Select value={status} onValueChange={setStatus}>
+    <SelectTrigger className="w-full sm:w-40">
+      <SelectValue placeholder="Status" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="all">All</SelectItem>
+      <SelectItem value="active">Active</SelectItem>
+      <SelectItem value="paused">Paused</SelectItem>
+      <SelectItem value="completed">Completed</SelectItem>
+    </SelectContent>
+  </Select>
 
-        <Select onValueChange={setPlatform}>
-          <SelectTrigger className="sm:w-40">
-            <SelectValue placeholder="Platform" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="meta">Meta</SelectItem>
-            <SelectItem value="google">Google</SelectItem>
-            <SelectItem value="linkedin">LinkedIn</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+  <Select value={platform} onValueChange={setPlatform}>
+    <SelectTrigger className="w-full sm:w-40">
+      <SelectValue placeholder="Platform" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="all">All</SelectItem>
+      <SelectItem value="meta">Meta</SelectItem>
+      <SelectItem value="google">Google</SelectItem>
+      <SelectItem value="linkedin">LinkedIn</SelectItem>
+      <SelectItem value="other">Other</SelectItem>
+    </SelectContent>
+  </Select>
+</div>
 
-      {/* Table */}
       <CampaignsTable
         data={{ campaigns: filteredCampaigns }}
         isLoading={isLoading}

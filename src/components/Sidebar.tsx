@@ -11,6 +11,11 @@ export default function Sidebar({
   isOpen?: boolean;
   onClose?: () => void;
 }) {
+  const handleNavClick = () => {
+    if (window.innerWidth < 1024) {
+      onClose?.();
+    }
+  };
   return (
     <aside
       className={`fixed lg:static w-56 h-screen bg-slate-800 text-white p-4 flex flex-col z-50 transition-transform duration-300 ${
@@ -39,13 +44,28 @@ export default function Sidebar({
           icon={<LayoutDashboard size={20} />}
           label="Dashboard"
           to="/"
+          onClick={handleNavClick}
         />
-        <NavItem icon={<Zap size={20} />} label="Campaigns" to="/campaigns" />
-        <NavItem icon={<BarChart3 size={20} />} label="Reports" to="/reports" />
+
+        <NavItem
+          icon={<Zap size={20} />}
+          label="Campaigns"
+          to="/campaigns"
+          onClick={handleNavClick}
+        />
+
+        <NavItem
+          icon={<BarChart3 size={20} />}
+          label="Reports"
+          to="/reports"
+          onClick={handleNavClick}
+        />
+
         <NavItem
           icon={<Settings size={20} />}
           label="Settings"
           to="/settings"
+          onClick={handleNavClick}
         />
       </nav>
     </aside>
@@ -56,14 +76,17 @@ function NavItem({
   icon,
   label,
   to,
+  onClick,
 }: {
   icon: React.ReactNode;
   label: string;
   to: string;
+  onClick?: () => void;
 }) {
   return (
     <NavLink
       to={to}
+      onClick={onClick}
       className={({ isActive }) =>
         `w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
           isActive

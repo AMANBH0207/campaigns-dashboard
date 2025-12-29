@@ -41,7 +41,7 @@ export default function CampaignsTable({
       </div>
     );
   if (isError)
-    return <div className="p-6 text-red-500">Failed to load campaigns</div>;
+    return <div className="p-6 text-red-500 text-center">Failed to load campaigns</div>;
 
   return (
     <>
@@ -130,10 +130,18 @@ export default function CampaignsTable({
             </select>
           </div>
 
-          <span>
-            {(page - 1) * itemsPerPage + 1}–
-            {Math.min(page * itemsPerPage, campaigns.length)} of{" "}
-            {campaigns.length}
+          <span className="text-xs sm:text-sm whitespace-nowrap">
+            <span className="sm:hidden">
+              {(page - 1) * itemsPerPage + 1}–
+              {Math.min(page * itemsPerPage, campaigns.length)} /{" "}
+              {campaigns.length}
+            </span>
+
+            <span className="hidden sm:inline">
+              {(page - 1) * itemsPerPage + 1}–
+              {Math.min(page * itemsPerPage, campaigns.length)} of{" "}
+              {campaigns.length}
+            </span>
           </span>
 
           <div className="flex items-center gap-2">
@@ -146,8 +154,14 @@ export default function CampaignsTable({
               Prev
             </Button>
 
-            <span>
-              Page {page} of {totalPages}
+            <span className="text-xs sm:text-sm whitespace-nowrap">
+              <span className="sm:hidden">
+                {page} - {totalPages}
+              </span>
+
+              <span className="hidden sm:inline">
+                Page {page} of {totalPages}
+              </span>
             </span>
 
             <Button

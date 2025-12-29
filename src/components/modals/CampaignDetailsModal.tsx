@@ -46,58 +46,73 @@ export default function CampaignDetailsModal({
           </div>
         ) : (
           <>
-            <h2 className="text-lg font-semibold mb-4">
-              {data?.campaign?.name}
-            </h2>
+            {data && (
+              <div>
+                <h2 className="text-lg font-semibold mb-4">
+                  {data?.campaign?.name}
+                </h2>
 
-            {/* Campaign Info */}
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <Info label="Status" value={data?.campaign?.status} />
-              <Info label="Budget" value={`₹${data?.campaign?.budget}`} />
-              <Info
-                label="Daily Budget"
-                value={`₹${data?.campaign?.daily_budget}`}
-              />
-              <Info
-                label="Platforms"
-                value={data?.campaign?.platforms.join(", ")}
-              />
-              <Info
-                label="Created"
-                value={new Date(
-                  data?.campaign?.created_at
-                ).toLocaleDateString()}
-              />
-            </div>
+                {/* Campaign Info */}
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <Info label="Status" value={data?.campaign?.status} />
+                  <Info label="Budget" value={`₹${data?.campaign?.budget}`} />
+                  <Info
+                    label="Daily Budget"
+                    value={`₹${data?.campaign?.daily_budget}`}
+                  />
+                  <Info
+                    label="Platforms"
+                    value={data?.campaign?.platforms.join(", ")}
+                  />
+                  <Info
+                    label="Created"
+                    value={new Date(
+                      data?.campaign?.created_at
+                    ).toLocaleDateString()}
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Insights */}
-            <div className="mt-6 border-t pt-5">
-              <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                Performance Insights
-              </h3>
+            {insightsData && (
+              <div className="mt-6 border-t pt-5">
+                <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                  Performance Insights
+                </h3>
 
-              <div className="grid grid-cols-3 gap-4 text-sm">
-                <Insight
-                  label="Impressions"
-                  value={insightsData?.insights?.impressions}
-                />
-                <Insight label="Clicks" value={insightsData?.insights?.clicks} />
-                <Insight
-                  label="Conversions"
-                  value={insightsData?.insights?.conversions}
-                />
-                <Insight
-                  label="Spend"
-                  value={`₹${insightsData.insights.spend}`}
-                />
-                <Insight label="CTR" value={`${insightsData?.insights?.ctr}%`} />
-                <Insight label="CPC" value={`₹${insightsData?.insights?.cpc}`} />
-                <Insight
-                  label="Conv. Rate"
-                  value={`${insightsData?.insights?.conversion_rate}%`}
-                />
+                <div className="grid grid-cols-3 gap-4 text-sm">
+                  <Insight
+                    label="Impressions"
+                    value={insightsData?.insights?.impressions}
+                  />
+                  <Insight
+                    label="Clicks"
+                    value={insightsData?.insights?.clicks}
+                  />
+                  <Insight
+                    label="Conversions"
+                    value={insightsData?.insights?.conversions}
+                  />
+                  <Insight
+                    label="Spend"
+                    value={`₹${insightsData?.insights?.spend}`}
+                  />
+                  <Insight
+                    label="CTR"
+                    value={`${insightsData?.insights?.ctr}%`}
+                  />
+                  <Insight
+                    label="CPC"
+                    value={`₹${insightsData?.insights?.cpc}`}
+                  />
+                  <Insight
+                    label="Conv. Rate"
+                    value={`${insightsData?.insights?.conversion_rate}%`}
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </>
         )}
       </Card>

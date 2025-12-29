@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MetricsCard from "@/components/MetricsCard";
 import PerformanceChart from "@/components/PerformanceChart";
 import CampaignsTable from "@/components/CampaignsTable";
@@ -53,7 +53,7 @@ export default function Dashboard() {
       </div>
 
       {/* Chart Header + Selector */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
         <h2 className="text-base font-semibold text-gray-800">
           Live Campaign Performance
         </h2>
@@ -61,7 +61,7 @@ export default function Dashboard() {
         <select
           value={selectedCampaign || ""}
           onChange={(e) => setUserSelectedCampaign(e.target.value)}
-          className="border rounded-md px-3 py-2 text-sm bg-white"
+          className="w-full sm:w-auto border rounded-md px-3 py-2 text-sm bg-white mt-2 sm:mt-0"
         >
           {data?.campaigns?.map((c: any) => (
             <option key={c.id} value={c.id}>
