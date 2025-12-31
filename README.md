@@ -59,6 +59,21 @@ Designed for clarity, speed, and minimal cognitive load.
 
 Built-in loading states, error handling, and safe data fallbacks.
 
+
+## 📸 Screenshots
+
+### Dashboard Overview
+![Dashboard](/public/assets/screenshots/dashboard.jpg)
+
+### Campaign Details
+![Campaign Details](/public/assets/screenshots/campaigns.jpg)
+
+### Reports & Settings
+![Reports](/public/assets/screenshots/settings.jpg)
+
+
+
+
 📈 Business Impact
 
 This dashboard enables teams to:
