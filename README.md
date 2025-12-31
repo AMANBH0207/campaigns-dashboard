@@ -1,73 +1,106 @@
-# React + TypeScript + Vite
+🧾 Campaigns Dashboard — Product Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application for tracking, analyzing, and monitoring marketing campaign performance in real-time.
 
-Currently, two official plugins are available:
+🔗 Live Product:
+https://campaigns-dashboard-iota.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🎯 Problem Statement
 
-## React Compiler
+Marketing teams need quick visibility into campaign performance across multiple metrics such as impressions, clicks, conversions, and spend.
+Most tools are either too complex or slow to reflect real-time changes.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Campaigns Dashboard solves this by providing:
 
-## Expanding the ESLint configuration
+A clean, fast, real-time dashboard for campaign monitoring and decision making.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+🧩 Solution
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+This product delivers a single unified interface where users can:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+View all campaigns at a glance
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Analyze detailed performance metrics
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Receive real-time performance updates
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Track ROI and optimization signals
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Make faster, data-driven decisions
+
+🧑‍💼 Target Users
+
+Marketing Managers
+
+Growth Teams
+
+Performance Analysts
+
+Product Owners
+
+⭐ Key Features
+📊 Campaign Overview
+
+Displays a summary of all campaigns.
+
+🔍 Campaign Details
+
+Deep dive into impressions, clicks, conversions, CTR, CPC, spend, and conversion rates.
+
+🔄 Real-Time Insights
+
+Live metrics powered by Server-Sent Events (SSE) for immediate updates.
+
+🧭 Clean & Intuitive UI
+
+Designed for clarity, speed, and minimal cognitive load.
+
+🛡 Reliable UX
+
+Built-in loading states, error handling, and safe data fallbacks.
+
+📈 Business Impact
+
+This dashboard enables teams to:
+
+Detect performance drops instantly
+
+Optimize budgets faster
+
+Improve conversion rates
+
+Increase ROI on marketing spend
+
+Reduce reporting time significantly
+
+🧪 Tech at a Glance
+
+React + TypeScript
+
+Redux Toolkit + RTK Query
+
+Tailwind + shadcn/ui
+
+Real-time streaming (SSE)
+
+Modular, scalable architecture
+
+🏗 Product Architecture (High Level)
+User Interface → State Management → API Services → Real-Time Stream → UI Updates
+
+🧠 Why This Product Stands Out
+
+Real-time feedback loop
+
+Performance-focused UI design
+
+Developer-friendly, scalable codebase
+
+Production-ready architecture
+
+👤 Product Developer
+
+Aman Bhardwaj
+Frontend Engineer
+
+GitHub: https://github.com/AMANBH0207
